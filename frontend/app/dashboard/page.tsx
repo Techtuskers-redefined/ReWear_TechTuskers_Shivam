@@ -139,7 +139,7 @@ export default function DashboardPage() {
         <div className="w-64 bg-white min-h-screen border-r border-gray-200">
           <div className="p-6">
             <Link href="/" className="text-xl font-bold text-gray-900">
-              SwapIt
+              ReWear
             </Link>
           </div>
 
@@ -309,21 +309,21 @@ export default function DashboardPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {swapHistory.map((swap) => (
+                      {swapHistory.filter(swap => swap && swap.item).map((swap) => (
                         <tr key={swap._id} className="border-b border-gray-100">
                           <td className="py-4">
                             <div className="flex items-center space-x-3">
                               <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
                                 <Image
-                                  src={swap.item.images?.[0]?.url || "/placeholder.svg"}
-                                  alt={swap.item.title}
+                                  src={swap.item?.images?.[0]?.url || "/placeholder.svg"}
+                                  alt={swap.item?.title || "Unknown Item"}
                                   width={64}
                                   height={64}
                                   className="object-cover"
                                 />
                               </div>
                               <div>
-                                <div className="font-medium text-gray-900">{swap.item.title}</div>
+                                <div className="font-medium text-gray-900">{swap.item?.title || "Unknown Item"}</div>
                               </div>
                             </div>
                           </td>

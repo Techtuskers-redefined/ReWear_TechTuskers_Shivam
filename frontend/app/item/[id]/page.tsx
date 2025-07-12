@@ -126,8 +126,8 @@ export default function ItemDetailPage() {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <Link href="/" className="flex items-center space-x-2">
-                <div className="w-6 h-6 bg-gradient-to-br from-swapit-blue to-swapit-purple rounded"></div>
-                <span className="text-xl font-bold gradient-text">SwapIt</span>
+                <div className="w-6 h-6 bg-gradient-to-br from-ReWear-blue to-ReWear-purple rounded"></div>
+                <span className="text-xl font-bold gradient-text">ReWear</span>
               </Link>
             </div>
 

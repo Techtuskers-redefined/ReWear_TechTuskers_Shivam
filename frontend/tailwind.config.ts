@@ -56,16 +56,16 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // SwapIt Brand Colors
-        swapit: {
-          blue: "hsl(var(--swapit-blue))",
-          green: "hsl(var(--swapit-green))",
-          purple: "hsl(var(--swapit-purple))",
-          orange: "hsl(var(--swapit-orange))",
-          pink: "hsl(var(--swapit-pink))",
-          yellow: "hsl(var(--swapit-yellow))",
-          teal: "hsl(var(--swapit-teal))",
-          indigo: "hsl(var(--swapit-indigo))",
+        // ReWear Brand Colors
+        ReWear: {
+          blue: "hsl(var(--ReWear-blue))",
+          green: "hsl(var(--ReWear-green))",
+          purple: "hsl(var(--ReWear-purple))",
+          orange: "hsl(var(--ReWear-orange))",
+          pink: "hsl(var(--ReWear-pink))",
+          yellow: "hsl(var(--ReWear-yellow))",
+          teal: "hsl(var(--ReWear-teal))",
+          indigo: "hsl(var(--ReWear-indigo))",
         },
         // Extended color palette
         blue: {
