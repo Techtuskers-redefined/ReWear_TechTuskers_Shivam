@@ -2,12 +2,14 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
+import { AuthProvider } from "@/hooks/useAuth"
+import { Toaster } from "sonner"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "ReWear - Swap your style. Save the planet.",
-  description: "A community-based clothing exchange platform for sustainable fashion",
+  title: "SwapIt - Sustainable Clothing Exchange",
+  description: "Join the sustainable fashion revolution. Swap, share, and discover pre-loved clothing.",
 }
 
 export default function RootLayout({
@@ -17,7 +19,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AuthProvider>
+          {children}
+          <Toaster position="top-right" />
+        </AuthProvider>
+      </body>
     </html>
   )
 }

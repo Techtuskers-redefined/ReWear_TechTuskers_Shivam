@@ -1,8 +1,12 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Image from "next/image"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
+import { itemsAPI } from "@/lib/api"
+import { useState, useEffect } from "react"
 
 const featuredSwaps = [
   {
@@ -57,6 +61,25 @@ const testimonials = [
 ]
 
 export default function HomePage() {
+  const [featuredItems, setFeaturedItems] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchFeaturedItems()
+  }, [])
+
+  const fetchFeaturedItems = async () => {
+    try {
+      setLoading(true)
+      const response = await itemsAPI.getItems({ limit: 4 })
+      setFeaturedItems(response.data?.items || [])
+    } catch (error) {
+      console.error("Error fetching featured items:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -99,21 +122,55 @@ export default function HomePage() {
       <section className="px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
           <h2 className="text-3xl font-bold text-gray-900 mb-8">Featured Swaps</h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {featuredSwaps.map((item) => (
-              <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <CardContent className="p-0">
-                  <div className="relative h-64">
-                    <Image src={item.image || "/placeholder.svg"} alt={item.title} fill className="object-cover" />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold text-gray-900 mb-1">{item.title}</h3>
-                    <p className="text-sm text-gray-600">{item.category}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          {loading ? (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {[...Array(4)].map((_, i) => (
+                <Card key={i} className="overflow-hidden">
+                  <CardContent className="p-0">
+                    <div className="relative h-64 bg-gray-200 animate-pulse"></div>
+                    <div className="p-4">
+                      <div className="h-4 bg-gray-200 rounded animate-pulse mb-2"></div>
+                      <div className="h-3 bg-gray-200 rounded animate-pulse"></div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : featuredItems.length > 0 ? (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {featuredItems.map((item) => (
+                <Link key={item._id} href={`/item/${item._id}`}>
+                  <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
+                    <CardContent className="p-0">
+                      <div className="relative h-64">
+                        <Image 
+                          src={item.images?.[0]?.url || "/placeholder.svg"} 
+                          alt={item.title} 
+                          fill 
+                          className="object-cover" 
+                        />
+                        <div className="absolute top-2 right-2 bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
+                          {item.status}
+                        </div>
+                      </div>
+                      <div className="p-4">
+                        <h3 className="font-semibold text-gray-900 mb-1">{item.title}</h3>
+                        <p className="text-sm text-gray-600">{item.category}</p>
+                        <p className="text-xs text-gray-500 mt-1">by {item.owner?.name}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-600 mb-4">No items available yet</p>
+              <Link href="/upload">
+                <Button>Upload Your First Item</Button>
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 
