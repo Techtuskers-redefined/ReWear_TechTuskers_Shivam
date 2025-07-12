@@ -11,8 +11,8 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="w-6 h-6 bg-black rounded"></div>
-              <span className="text-xl font-bold text-gray-900">ReWear</span>
+              <div className="w-6 h-6 bg-gradient-to-br from-swapit-blue to-swapit-purple rounded"></div>
+              <span className="text-xl font-bold gradient-text">SwapIt</span>
             </Link>
           </div>
 
@@ -38,7 +38,7 @@ export function Navbar() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input placeholder="Search" className="pl-10 w-64 bg-gray-100 border-0" />
             </div>
-            <NotificationDropdown />
+            <NotificationDropdown/>
             <Link href="/dashboard">
               <Avatar className="h-8 w-8 cursor-pointer">
                 <AvatarImage src="/placeholder.svg?height=32&width=32" />
