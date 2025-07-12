@@ -38,12 +38,12 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-swapit-blue/5 to-swapit-purple/5 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-ReWear-blue/5 to-ReWear-purple/5 flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-8 h-8 bg-gradient-to-br from-swapit-blue to-swapit-purple rounded"></div>
-            <span className="text-2xl font-bold gradient-text">SwapIt</span>
+            <div className="w-8 h-8 bg-gradient-to-br from-ReWear-blue to-ReWear-purple rounded"></div>
+            <span className="text-2xl font-bold gradient-text">ReWear</span>
           </div>
           <CardTitle>Welcome back</CardTitle>
           <CardDescription>Sign in to your account to continue</CardDescription>
@@ -74,7 +74,7 @@ export default function LoginPage() {
             </div>
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-swapit-blue to-swapit-purple"
+              className="w-full bg-gradient-to-r from-ReWear-blue to-ReWear-purple"
               disabled={loading}
             >
               {loading ? (
@@ -89,7 +89,7 @@ export default function LoginPage() {
           </form>
           <div className="mt-4 text-center text-sm">
             Don't have an account?{" "}
-            <Link href="/register" className="text-swapit-blue hover:underline">
+            <Link href="/register" className="text-ReWear-blue hover:underline">
               Sign up
             </Link>
           </div>

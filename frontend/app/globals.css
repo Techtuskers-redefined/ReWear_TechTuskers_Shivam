@@ -25,15 +25,15 @@
     --ring: 217.2 91.2% 59.8%;
     --radius: 0.75rem;
 
-    /* Custom SwapIt colors */
-    --swapit-blue: 217.2 91.2% 59.8%;
-    --swapit-green: 142.1 76.2% 36.3%;
-    --swapit-purple: 262.1 83.3% 57.8%;
-    --swapit-orange: 24.6 95% 53.1%;
-    --swapit-pink: 330.4 81.2% 60.4%;
-    --swapit-yellow: 47.9 95.8% 53.1%;
-    --swapit-teal: 173.4 80.4% 40%;
-    --swapit-indigo: 243.4 75.4% 58.6%;
+    /* Custom ReWear colors */
+    --ReWear-blue: 217.2 91.2% 59.8%;
+    --ReWear-green: 142.1 76.2% 36.3%;
+    --ReWear-purple: 262.1 83.3% 57.8%;
+    --ReWear-orange: 24.6 95% 53.1%;
+    --ReWear-pink: 330.4 81.2% 60.4%;
+    --ReWear-yellow: 47.9 95.8% 53.1%;
+    --ReWear-teal: 173.4 80.4% 40%;
+    --ReWear-indigo: 243.4 75.4% 58.6%;
   }
 
   .dark {
@@ -70,11 +70,11 @@
 
 @layer components {
   .gradient-bg {
-    background: linear-gradient(135deg, hsl(var(--swapit-blue)) 0%, hsl(var(--swapit-purple)) 100%);
+    background: linear-gradient(135deg, hsl(var(--ReWear-blue)) 0%, hsl(var(--ReWear-purple)) 100%);
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, hsl(var(--swapit-blue)), hsl(var(--swapit-green)));
+    background: linear-gradient(135deg, hsl(var(--ReWear-blue)), hsl(var(--ReWear-green)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -85,12 +85,12 @@
   }
 
   .btn-primary {
-    background: linear-gradient(135deg, hsl(var(--swapit-blue)), hsl(var(--swapit-purple)));
+    background: linear-gradient(135deg, hsl(var(--ReWear-blue)), hsl(var(--ReWear-purple)));
     @apply text-white border-0 hover:opacity-90 transition-opacity;
   }
 
   .btn-secondary {
-    background: linear-gradient(135deg, hsl(var(--swapit-green)), hsl(var(--swapit-teal)));
+    background: linear-gradient(135deg, hsl(var(--ReWear-green)), hsl(var(--ReWear-teal)));
     @apply text-white border-0 hover:opacity-90 transition-opacity;
   }
 }

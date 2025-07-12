@@ -14,7 +14,7 @@ const communityPosts = [
     avatar: "/placeholder.svg?height=40&width=40",
     time: "2 hours ago",
     content:
-      "Just completed my 10th swap! This vintage leather jacket is absolutely perfect. The SwapIt community never disappoints! 💚",
+      "Just completed my 10th swap! This vintage leather jacket is absolutely perfect. The ReWear community never disappoints! 💚",
     image: "/placeholder.svg?height=300&width=400",
     likes: 24,
     comments: 8,
@@ -36,7 +36,7 @@ const communityPosts = [
     user: "Sofia Rodriguez",
     avatar: "/placeholder.svg?height=40&width=40",
     time: "6 hours ago",
-    content: "Before and after of my closet transformation using SwapIt! From fast fashion to sustainable style ✨",
+    content: "Before and after of my closet transformation using ReWear! From fast fashion to sustainable style ✨",
     image: "/placeholder.svg?height=300&width=400",
     likes: 45,
     comments: 15,

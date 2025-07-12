@@ -162,15 +162,15 @@ export default function UploadPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-swapit-blue/5 to-swapit-purple/5">
+    <div className="min-h-screen bg-gradient-to-br from-ReWear-blue/5 to-ReWear-purple/5">
       {/* Header */}
       <div className="border-b border-gray-200 bg-white/80 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <Link href="/" className="flex items-center space-x-2">
-                <div className="w-6 h-6 bg-gradient-to-br from-swapit-blue to-swapit-purple rounded"></div>
-                <span className="text-xl font-bold gradient-text">SwapIt</span>
+                <div className="w-6 h-6 bg-gradient-to-br from-ReWear-blue to-ReWear-purple rounded"></div>
+                <span className="text-xl font-bold gradient-text">ReWear</span>
               </Link>
             </div>
 
@@ -185,7 +185,7 @@ export default function UploadPage() {
                 <Link href="/community" className="text-gray-600 hover:text-gray-900">
                   Community
                 </Link>
-                <Link href="/upload" className="text-swapit-blue font-medium">
+                <Link href="/upload" className="text-ReWear-blue font-medium">
                   Upload
                 </Link>
               </div>
@@ -211,7 +211,7 @@ export default function UploadPage() {
             <div className="text-sm text-gray-600 mb-2">Step 1 of 2</div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div
-                className="bg-gradient-to-r from-swapit-blue to-swapit-purple h-2 rounded-full"
+                className="bg-gradient-to-r from-ReWear-blue to-ReWear-purple h-2 rounded-full"
                 style={{ width: "50%" }}
               ></div>
             </div>
@@ -245,7 +245,7 @@ export default function UploadPage() {
               )}
 
               <div
-                className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-swapit-blue transition-colors cursor-pointer"
+                className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-ReWear-blue transition-colors cursor-pointer"
                 onClick={() => fileInputRef.current?.click()}
               >
                 <ImagePlus className="h-12 w-12 text-gray-400 mx-auto mb-4" />
@@ -440,7 +440,7 @@ export default function UploadPage() {
                 <Badge
                   key={tag}
                   variant="outline"
-                  className="cursor-pointer hover:bg-swapit-blue/10 hover:border-swapit-blue transition-colors"
+                  className="cursor-pointer hover:bg-ReWear-blue/10 hover:border-ReWear-blue transition-colors"
                   onClick={() => addTag(tag)}
                 >
                   {tag}
@@ -452,7 +452,7 @@ export default function UploadPage() {
             {selectedTags.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-3">
                 {selectedTags.map((tag) => (
-                  <Badge key={tag} className="flex items-center gap-1 bg-swapit-blue text-white">
+                  <Badge key={tag} className="flex items-center gap-1 bg-ReWear-blue text-white">
                     {tag}
                     <button type="button" onClick={() => removeTag(tag)}>
                       <X className="h-3 w-3" />
@@ -481,7 +481,7 @@ export default function UploadPage() {
           <div className="pt-6">
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-swapit-blue to-swapit-purple hover:from-swapit-blue/90 hover:to-swapit-purple/90 text-white py-3 text-lg"
+              className="w-full bg-gradient-to-r from-ReWear-blue to-ReWear-purple hover:from-ReWear-blue/90 hover:to-ReWear-purple/90 text-white py-3 text-lg"
               disabled={loading}
             >
               {loading ? (

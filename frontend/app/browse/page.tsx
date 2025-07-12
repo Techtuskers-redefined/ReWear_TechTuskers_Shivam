@@ -231,7 +231,7 @@ export default function BrowsePage() {
               <h1 className="text-3xl font-bold gradient-text">Browse Items</h1>
               <Button
                 variant="outline"
-                className="flex items-center gap-2 border-swapit-blue text-swapit-blue hover:bg-swapit-blue hover:text-white bg-transparent"
+                className="flex items-center gap-2 border-ReWear-blue text-ReWear-blue hover:bg-ReWear-blue hover:text-white bg-transparent"
               >
                 Sort
                 <ChevronDown className="h-4 w-4" />

@@ -8,7 +8,7 @@ import { Toaster } from "sonner"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "SwapIt - Sustainable Clothing Exchange",
+  title: "ReWear - Sustainable Clothing Exchange",
   description: "Join the sustainable fashion revolution. Swap, share, and discover pre-loved clothing.",
 }
 

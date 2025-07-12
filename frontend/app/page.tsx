@@ -89,7 +89,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl">
           <div className="relative rounded-2xl overflow-hidden bg-gray-300 h-96">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-07-12%20at%2010.48.04-Sehe5HGJQNqXqEbVaxLc8ECw9L7lTd.png"
+              src="https://images.pexels.com/photos/30922973/pexels-photo-30922973.jpeg"
               alt="Hero background"
               fill
               className="object-cover"
@@ -187,7 +187,7 @@ export default function HomePage() {
 
           <div className="grid gap-8 md:grid-cols-3">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-swapit-blue to-swapit-purple rounded-lg flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-ReWear-blue to-ReWear-purple rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -205,7 +205,7 @@ export default function HomePage() {
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-swapit-green to-swapit-teal rounded-lg flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-ReWear-green to-ReWear-teal rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -222,7 +222,7 @@ export default function HomePage() {
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-swapit-orange to-swapit-pink rounded-lg flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-ReWear-orange to-ReWear-pink rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -281,7 +281,7 @@ export default function HomePage() {
             Start your sustainable fashion journey today and become part of our growing community.
           </p>
           <Link href="/upload">
-            <Button size="lg" className="bg-white text-swapit-blue hover:bg-gray-100">
+            <Button size="lg" className="bg-white text-ReWear-blue hover:bg-gray-100">
               Get Started
             </Button>
           </Link>
