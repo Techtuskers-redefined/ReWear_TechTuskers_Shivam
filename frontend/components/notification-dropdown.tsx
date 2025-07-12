@@ -1,8 +1,8 @@
 "use client"
 
+import { useState, useEffect } from "react"
+import { Bell, Check, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,73 +11,102 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Bell, RefreshCw, Heart, MessageCircle } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { notificationsAPI } from "@/lib/api"
+import { useAuth } from "@/hooks/useAuth"
+import { toast } from "sonner"
 
-const notifications = [
-  {
-    id: 1,
-    type: "swap_request",
-    title: "New swap request",
-    message: "Emma Wilson wants to swap for your vintage jacket",
-    time: "2 minutes ago",
-    unread: true,
-    avatar: "/placeholder.svg?height=32&width=32",
-  },
-  {
-    id: 2,
-    type: "swap_accepted",
-    title: "Swap accepted!",
-    message: "Marcus Chen accepted your swap request",
-    time: "1 hour ago",
-    unread: true,
-    avatar: "/placeholder.svg?height=32&width=32",
-  },
-  {
-    id: 3,
-    type: "like",
-    title: "Item liked",
-    message: "Sofia Rodriguez liked your cashmere sweater",
-    time: "3 hours ago",
-    unread: false,
-    avatar: "/placeholder.svg?height=32&width=32",
-  },
-  {
-    id: 4,
-    type: "message",
-    title: "New message",
-    message: "Alex Thompson sent you a message about the denim jacket",
-    time: "5 hours ago",
-    unread: false,
-    avatar: "/placeholder.svg?height=32&width=32",
-  },
-  {
-    id: 5,
-    type: "swap_completed",
-    title: "Swap completed",
-    message: "Your swap with Riley Davis has been completed",
-    time: "1 day ago",
-    unread: false,
-    avatar: "/placeholder.svg?height=32&width=32",
-  },
-]
-
-const getNotificationIcon = (type: string) => {
-  switch (type) {
-    case "swap_request":
-    case "swap_accepted":
-    case "swap_completed":
-      return <RefreshCw className="h-4 w-4 text-blue-500" />
-    case "like":
-      return <Heart className="h-4 w-4 text-red-500" />
-    case "message":
-      return <MessageCircle className="h-4 w-4 text-green-500" />
-    default:
-      return <Bell className="h-4 w-4 text-gray-500" />
+interface Notification {
+  _id: string
+  title: string
+  message: string
+  type: string
+  isRead: boolean
+  createdAt: string
+  sender?: {
+    name: string
+    avatar?: { url: string }
+  }
+  relatedItem?: {
+    title: string
+    images: { url: string }[]
   }
 }
 
 export function NotificationDropdown() {
-  const unreadCount = notifications.filter((n) => n.unread).length
+  const { user } = useAuth()
+  const [notifications, setNotifications] = useState<Notification[]>([])
+  const [unreadCount, setUnreadCount] = useState(0)
+  const [loading, setLoading] = useState(false)
+
+  const fetchNotifications = async () => {
+    if (!user) return
+
+    try {
+      setLoading(true)
+      const response = await notificationsAPI.getNotifications({ limit: 10 })
+      setNotifications(response.data.notifications)
+      setUnreadCount(response.data.unreadCount)
+    } catch (error) {
+      console.error("Error fetching notifications:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchNotifications()
+
+    // Poll for new notifications every 30 seconds
+    const interval = setInterval(fetchNotifications, 30000)
+    return () => clearInterval(interval)
+  }, [user])
+
+  const markAsRead = async (notificationId: string) => {
+    try {
+      await notificationsAPI.markAsRead(notificationId)
+      setNotifications((prev) =>
+        prev.map((notif) => (notif._id === notificationId ? { ...notif, isRead: true } : notif)),
+      )
+      setUnreadCount((prev) => Math.max(0, prev - 1))
+    } catch (error) {
+      toast.error("Failed to mark notification as read")
+    }
+  }
+
+  const markAllAsRead = async () => {
+    try {
+      await notificationsAPI.markAllAsRead()
+      setNotifications((prev) => prev.map((notif) => ({ ...notif, isRead: true })))
+      setUnreadCount(0)
+      toast.success("All notifications marked as read")
+    } catch (error) {
+      toast.error("Failed to mark all notifications as read")
+    }
+  }
+
+  const deleteNotification = async (notificationId: string) => {
+    try {
+      await notificationsAPI.deleteNotification(notificationId)
+      setNotifications((prev) => prev.filter((notif) => notif._id !== notificationId))
+      toast.success("Notification deleted")
+    } catch (error) {
+      toast.error("Failed to delete notification")
+    }
+  }
+
+  const formatTimeAgo = (dateString: string) => {
+    const date = new Date(dateString)
+    const now = new Date()
+    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000)
+
+    if (diffInSeconds < 60) return "Just now"
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`
+    return `${Math.floor(diffInSeconds / 86400)}d ago`
+  }
+
+  if (!user) return null
 
   return (
     <DropdownMenu>
@@ -85,8 +114,11 @@ export function NotificationDropdown() {
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
-            <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center bg-red-500 text-white text-xs">
-              {unreadCount}
+            <Badge
+              variant="destructive"
+              className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+            >
+              {unreadCount > 9 ? "9+" : unreadCount}
             </Badge>
           )}
         </Button>
@@ -95,43 +127,73 @@ export function NotificationDropdown() {
         <DropdownMenuLabel className="flex items-center justify-between">
           <span>Notifications</span>
           {unreadCount > 0 && (
-            <Button variant="ghost" size="sm" className="text-xs">
+            <Button variant="ghost" size="sm" onClick={markAllAsRead} className="text-xs">
               Mark all read
             </Button>
           )}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        <div className="max-h-96 overflow-y-auto">
-          {notifications.map((notification) => (
-            <DropdownMenuItem key={notification.id} className="p-0">
-              <div className={`w-full p-3 hover:bg-gray-50 ${notification.unread ? "bg-blue-50" : ""}`}>
-                <div className="flex items-start space-x-3">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={notification.avatar || "/placeholder.svg"} />
-                    <AvatarFallback>{notification.title[0]}</AvatarFallback>
-                  </Avatar>
+        {loading ? (
+          <div className="p-4 text-center text-sm text-gray-500">Loading notifications...</div>
+        ) : notifications.length === 0 ? (
+          <div className="p-4 text-center text-sm text-gray-500">No notifications yet</div>
+        ) : (
+          <div className="max-h-96 overflow-y-auto">
+            {notifications.map((notification) => (
+              <DropdownMenuItem
+                key={notification._id}
+                className={`p-3 cursor-pointer ${!notification.isRead ? "bg-blue-50" : ""}`}
+                onClick={() => !notification.isRead && markAsRead(notification._id)}
+              >
+                <div className="flex items-start space-x-3 w-full">
+                  {notification.relatedItem?.images?.[0] && (
+                    <img
+                      src={notification.relatedItem.images[0].url || "/placeholder.svg"}
+                      alt=""
+                      className="w-10 h-10 rounded object-cover flex-shrink-0"
+                    />
+                  )}
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center space-x-2">
-                      {getNotificationIcon(notification.type)}
-                      <p className="text-sm font-medium text-gray-900 truncate">{notification.title}</p>
-                      {notification.unread && <div className="w-2 h-2 bg-blue-500 rounded-full"></div>}
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-gray-900 truncate">{notification.title}</p>
+                        <p className="text-xs text-gray-500 mt-1 line-clamp-2">{notification.message}</p>
+                        <p className="text-xs text-gray-400 mt-1">{formatTimeAgo(notification.createdAt)}</p>
+                      </div>
+                      <div className="flex items-center space-x-1 ml-2">
+                        {!notification.isRead && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              markAsRead(notification._id)
+                            }}
+                            className="h-6 w-6 p-0"
+                          >
+                            <Check className="h-3 w-3" />
+                          </Button>
+                        )}
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            deleteNotification(notification._id)
+                          }}
+                          className="h-6 w-6 p-0 text-red-500 hover:text-red-700"
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
                     </div>
-                    <p className="text-sm text-gray-600 mt-1">{notification.message}</p>
-                    <p className="text-xs text-gray-500 mt-1">{notification.time}</p>
                   </div>
                 </div>
-              </div>
-            </DropdownMenuItem>
-          ))}
-        </div>
-
-        <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-center">
-          <Button variant="ghost" className="w-full text-sm">
-            View all notifications
-          </Button>
-        </DropdownMenuItem>
+              </DropdownMenuItem>
+            ))}
+          </div>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )

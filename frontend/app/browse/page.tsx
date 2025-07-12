@@ -1,11 +1,15 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, Loader2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
+import { itemsAPI } from "@/lib/api"
+import { useState, useEffect } from "react"
 
 const items = [
   {
@@ -65,6 +69,61 @@ const items = [
 ]
 
 export default function BrowsePage() {
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [filters, setFilters] = useState({
+    category: "all",
+    size: "all",
+    gender: "all",
+    condition: "all",
+    availability: "all"
+  })
+
+  useEffect(() => {
+    fetchItems()
+  }, [filters])
+
+  const fetchItems = async () => {
+    try {
+      setLoading(true)
+      const params = {}
+      
+      // Add filters to params
+      if (filters.category !== "all") params.category = filters.category
+      if (filters.size !== "all") params.size = filters.size
+      if (filters.gender !== "all") params.gender = filters.gender
+      if (filters.condition !== "all") params.condition = filters.condition
+      if (filters.availability !== "all") params.status = filters.availability
+
+      const response = await itemsAPI.getItems(params)
+      setItems(response.data?.items || [])
+    } catch (error) {
+      console.error("Error fetching items:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleFilterChange = (filterType: string, value: string) => {
+    setFilters(prev => ({ ...prev, [filterType]: value }))
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Navbar />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex items-center justify-center h-64">
+            <div className="text-center">
+              <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
+              <p className="text-gray-600">Loading items...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -80,7 +139,7 @@ export default function BrowsePage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
-                <Select>
+                <Select value={filters.category} onValueChange={(value) => handleFilterChange("category", value)}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="All" />
                     <ChevronDown className="h-4 w-4" />
@@ -179,29 +238,53 @@ export default function BrowsePage() {
               </Button>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {items.map((item) => (
-                <Link key={item.id} href={`/item/${item.id}`}>
-                  <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-                    <CardContent className="p-0">
-                      <div className="relative h-64">
-                        <Image src={item.image || "/placeholder.svg"} alt={item.title} fill className="object-cover" />
-                      </div>
-                      <div className="p-4">
-                        <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
-                        <div className="flex flex-wrap gap-1">
-                          {item.tags.map((tag, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
-                              {tag}
-                            </Badge>
-                          ))}
+            {items.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-gray-600 mb-4">No items found matching your filters</p>
+                <Button onClick={() => setFilters({
+                  category: "all",
+                  size: "all",
+                  gender: "all",
+                  condition: "all",
+                  availability: "all"
+                })}>
+                  Clear Filters
+                </Button>
+              </div>
+            ) : (
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {items.map((item) => (
+                  <Link key={item._id} href={`/item/${item._id}`}>
+                    <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
+                      <CardContent className="p-0">
+                        <div className="relative h-64">
+                          <Image 
+                            src={item.images?.[0]?.url || "/placeholder.svg"} 
+                            alt={item.title} 
+                            fill 
+                            className="object-cover" 
+                          />
+                          <Badge className="absolute top-2 right-2 bg-green-100 text-green-800">
+                            {item.status}
+                          </Badge>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
+                        <div className="p-4">
+                          <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
+                          <p className="text-sm text-gray-600 mb-2">{item.owner?.name}</p>
+                          <div className="flex flex-wrap gap-1">
+                            {item.tags?.slice(0, 3).map((tag, index) => (
+                              <Badge key={index} variant="secondary" className="text-xs">
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

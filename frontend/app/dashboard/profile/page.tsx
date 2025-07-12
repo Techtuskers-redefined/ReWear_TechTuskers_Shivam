@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -7,6 +9,9 @@ import { MapPin, Calendar, Star, Edit, Settings } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
+import { useAuth } from "@/hooks/useAuth"
+import { useEffect, useState } from "react"
+import { itemsAPI } from "@/lib/api"
 
 const userItems = [
   {
@@ -74,6 +79,59 @@ const badges = [
 ]
 
 export default function ProfilePage() {
+  const { user, loading } = useAuth()
+  const [userItems, setUserItems] = useState([])
+  const [userStats, setUserStats] = useState({
+    itemsListed: 0,
+    successfulSwaps: 0,
+    rating: 0,
+    pointsEarned: 0
+  })
+
+  console.log("Profile page - user:", user)
+  console.log("Profile page - loading:", loading)
+
+  useEffect(() => {
+    if (user) {
+      // Fetch user's items
+      const fetchUserItems = async () => {
+        try {
+          const response = await itemsAPI.getMyItems()
+          setUserItems(response.data?.items || [])
+        } catch (error) {
+          console.error("Error fetching user items:", error)
+        }
+      }
+
+      fetchUserItems()
+    }
+  }, [user])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-swapit-blue mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading profile...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Please Login</h1>
+          <p className="text-gray-600 mb-4">You need to be logged in to view your profile</p>
+          <Link href="/login">
+            <Button>Login</Button>
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -84,23 +142,19 @@ export default function ProfilePage() {
           <CardContent className="p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
               <Avatar className="h-24 w-24">
-                <AvatarImage src="/placeholder.svg?height=96&width=96" />
-                <AvatarFallback>JD</AvatarFallback>
+                <AvatarImage src={user.avatar?.url || "/placeholder.svg?height=96&width=96"} />
+                <AvatarFallback>{user.name.charAt(0).toUpperCase()}</AvatarFallback>
               </Avatar>
 
               <div className="flex-1">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Jane Doe</h1>
-                    <p className="text-gray-600">@jane_eco_style</p>
+                    <h1 className="text-2xl font-bold text-gray-900">{user.name}</h1>
+                    <p className="text-gray-600">{user.email}</p>
                     <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
                       <div className="flex items-center">
-                        <MapPin className="h-4 w-4 mr-1" />
-                        San Francisco, CA
-                      </div>
-                      <div className="flex items-center">
                         <Calendar className="h-4 w-4 mr-1" />
-                        Joined March 2024
+                        Member since {new Date().getFullYear()}
                       </div>
                     </div>
                   </div>
@@ -128,22 +182,22 @@ export default function ProfilePage() {
                 {/* Stats */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-gray-900">47</div>
+                    <div className="text-2xl font-bold text-gray-900">{userItems.length}</div>
                     <div className="text-sm text-gray-600">Items Listed</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-gray-900">32</div>
+                    <div className="text-2xl font-bold text-gray-900">{userStats.successfulSwaps}</div>
                     <div className="text-sm text-gray-600">Successful Swaps</div>
                   </div>
                   <div className="text-center">
                     <div className="flex items-center justify-center">
                       <Star className="h-5 w-5 text-yellow-400 mr-1" />
-                      <span className="text-2xl font-bold text-gray-900">4.9</span>
+                      <span className="text-2xl font-bold text-gray-900">{userStats.rating || "N/A"}</span>
                     </div>
                     <div className="text-sm text-gray-600">Rating</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-gray-900">2,340</div>
+                    <div className="text-2xl font-bold text-gray-900">{user.points || 0}</div>
                     <div className="text-sm text-gray-600">Points Earned</div>
                   </div>
                 </div>
@@ -177,41 +231,52 @@ export default function ProfilePage() {
           </TabsList>
 
           <TabsContent value="items" className="mt-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {userItems.map((item) => (
-                <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <CardContent className="p-0">
-                    <div className="relative">
-                      <Image
-                        src={item.image || "/placeholder.svg"}
-                        alt={item.title}
-                        width={200}
-                        height={200}
-                        className="w-full h-48 object-cover"
-                      />
-                      <Badge
-                        className={`absolute top-2 right-2 ${
-                          item.status === "Available"
-                            ? "bg-green-100 text-green-800"
-                            : item.status === "Swapped"
-                              ? "bg-gray-100 text-gray-800"
-                              : "bg-yellow-100 text-yellow-800"
-                        }`}
-                      >
-                        {item.status}
-                      </Badge>
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Star className="h-4 w-4 mr-1" />
-                        {item.likes} likes
+            {userItems.length === 0 ? (
+              <Card>
+                <CardContent className="p-8 text-center">
+                  <div className="text-gray-500 mb-4">No items listed yet</div>
+                  <Link href="/upload">
+                    <Button>Upload Your First Item</Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {userItems.map((item) => (
+                  <Card key={item._id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                    <CardContent className="p-0">
+                      <div className="relative">
+                        <Image
+                          src={item.images?.[0]?.url || "/placeholder.svg"}
+                          alt={item.title}
+                          width={200}
+                          height={200}
+                          className="w-full h-48 object-cover"
+                        />
+                        <Badge
+                          className={`absolute top-2 right-2 ${
+                            item.status === "available"
+                              ? "bg-green-100 text-green-800"
+                              : item.status === "swapped"
+                                ? "bg-gray-100 text-gray-800"
+                                : "bg-yellow-100 text-yellow-800"
+                          }`}
+                        >
+                          {item.status}
+                        </Badge>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                      <div className="p-4">
+                        <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Star className="h-4 w-4 mr-1" />
+                          {item.likes?.length || 0} likes
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
           </TabsContent>
 
           <TabsContent value="reviews" className="mt-6">

@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -8,6 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Package, RefreshCw, Coins, User, Settings, Bell, Shield, Globe, Camera } from "lucide-react"
 import Link from "next/link"
+import { useAuth } from "@/hooks/useAuth"
+import { useState, useEffect } from "react"
 
 const sidebarItems = [
   { icon: Package, label: "My Items", href: "/dashboard" },
@@ -18,6 +22,58 @@ const sidebarItems = [
 ]
 
 export default function SettingsPage() {
+  const { user, loading } = useAuth()
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    bio: "",
+    phone: "",
+    city: "",
+    state: ""
+  })
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        name: user.name || "",
+        email: user.email || "",
+        bio: user.bio || "",
+        phone: user.phone || "",
+        city: user.location?.city || "",
+        state: user.location?.state || ""
+      })
+    }
+  }, [user])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-swapit-blue mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading settings...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Please Login</h1>
+          <p className="text-gray-600 mb-4">You need to be logged in to access settings</p>
+          <Link href="/login">
+            <Button>Login</Button>
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }))
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="flex">
@@ -65,34 +121,40 @@ export default function SettingsPage() {
                 <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
                   <div className="relative">
                     <Avatar className="h-20 w-20">
-                      <AvatarImage src="/placeholder.svg?height=80&width=80" />
-                      <AvatarFallback>JD</AvatarFallback>
+                      <AvatarImage src={user.avatar?.url || "/placeholder.svg?height=80&width=80"} />
+                      <AvatarFallback>{user.name.charAt(0).toUpperCase()}</AvatarFallback>
                     </Avatar>
                     <Button size="sm" className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full p-0">
                       <Camera className="h-4 w-4" />
                     </Button>
                   </div>
                   <div className="flex-1 space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="firstName">First Name</Label>
-                        <Input id="firstName" defaultValue="Jane" />
-                      </div>
-                      <div>
-                        <Label htmlFor="lastName">Last Name</Label>
-                        <Input id="lastName" defaultValue="Doe" />
-                      </div>
+                    <div>
+                      <Label htmlFor="name">Full Name</Label>
+                      <Input 
+                        id="name" 
+                        value={formData.name}
+                        onChange={(e) => handleInputChange("name", e.target.value)}
+                      />
                     </div>
                     <div>
-                      <Label htmlFor="username">Username</Label>
-                      <Input id="username" defaultValue="jane_eco_style" />
+                      <Label htmlFor="email">Email</Label>
+                      <Input 
+                        id="email" 
+                        type="email" 
+                        value={formData.email}
+                        onChange={(e) => handleInputChange("email", e.target.value)}
+                        disabled
+                      />
                     </div>
                     <div>
                       <Label htmlFor="bio">Bio</Label>
                       <Textarea
                         id="bio"
-                        defaultValue="Passionate about sustainable fashion and helping others discover the joy of swapping!"
+                        value={formData.bio}
+                        onChange={(e) => handleInputChange("bio", e.target.value)}
                         className="min-h-[80px]"
+                        placeholder="Tell us about yourself..."
                       />
                     </div>
                   </div>
@@ -107,23 +169,39 @@ export default function SettingsPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="email">Email Address</Label>
-                  <Input id="email" type="email" defaultValue="jane.doe@example.com" />
+                  <Label htmlFor="contactEmail">Email Address</Label>
+                  <Input 
+                    id="contactEmail" 
+                    type="email" 
+                    value={formData.email}
+                    disabled
+                  />
                 </div>
                 <div>
                   <Label htmlFor="phone">Phone Number</Label>
-                  <Input id="phone" type="tel" defaultValue="+1 (555) 123-4567" />
+                  <Input 
+                    id="phone" 
+                    type="tel" 
+                    value={formData.phone}
+                    onChange={(e) => handleInputChange("phone", e.target.value)}
+                    placeholder="+1 (555) 123-4567"
+                  />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="city">City</Label>
-                    <Input id="city" defaultValue="San Francisco" />
+                    <Input 
+                      id="city" 
+                      value={formData.city}
+                      onChange={(e) => handleInputChange("city", e.target.value)}
+                      placeholder="Enter your city"
+                    />
                   </div>
                   <div>
                     <Label htmlFor="state">State</Label>
-                    <Select defaultValue="ca">
+                    <Select value={formData.state} onValueChange={(value) => handleInputChange("state", value)}>
                       <SelectTrigger>
-                        <SelectValue />
+                        <SelectValue placeholder="Select state" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="ca">California</SelectItem>
