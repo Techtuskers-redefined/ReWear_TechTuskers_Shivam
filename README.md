@@ -1,26 +1,90 @@
-ReWear – Odoo Hackathon 2025 🌱
+# ♻️ ReWear – Odoo Hackathon 2025
 
-By: Shivam (Team TechTuskers)
+**By Team TechTuskers**  
+👥 Shivam, Uma, Rounakk
 
-Repository for the Odoo Hackathon 2025 entry “ReWear” by TechTuskers (Shivam, Uma, and Rounakk) – a TypeScript-based solution. 
+---
 
-📌 Project Overview
-ReWear is a sustainable fashion assistant built on Odoo, helping users make smarter swap decisions. It:
+## 🌿 Project Overview
 
-Calculates a product's age, brand quality, agent verification, bill authenticity, and overall condition to compute a swap point score
+**ReWear** is a sustainable fashion assistant built as part of the Odoo Hackathon 2025. It helps users make **smarter, eco-conscious clothing swap decisions** with the help of intelligent scoring and points distribution logic.
 
-Awards a 2% bonus of total points
+Built using **TypeScript** and modern full-stack tooling, ReWear makes circular fashion intuitive and rewarding.
 
-Distributes points to users during listing initiation and upon successful swap completion
+---
 
-Handles two swap scenarios:
+## 🚀 Core Features
 
-Equal-value swap: both participants get their full points
+- 🔢 **Smart Swap Point Scoring**  
+  Each clothing item is scored based on:
+  - Age of the product  
+  - Brand quality  
+  - Agent verification  
+  - Bill authenticity  
+  - Overall condition  
 
-Unequal-value swap: compensates the difference proportionally from lower-value listings
+- 🎁 **Bonus Points System**  
+  - Users earn a **2% bonus** of their total points during listing  
+  - Additional bonus points on successful swaps  
 
-Add swap history, notifications, reporting
+- ⚖️ **Dynamic Swap Logic**  
+  - **Equal-value swap** → Both users receive full point value  
+  - **Unequal-value swap** → Lower-value item gets **proportional compensation** in points  
 
-🧠 About TechTuskers
-The project is maintained by Shivam, Uma, and Rounakk from Team TechTuskers — participants in Odoo Hackathon 2025. 
-techtuskers.com.siteindices.com
+- 🔄 **Swap History & Reports**  
+  - Track completed swaps, points earned/lost, and user performance
+
+- 🔔 **Real-time Notifications**  
+  - Get notified when:
+    - Your item is requested  
+    - Your request is accepted  
+    - A new listing matches your interest  
+
+---
+
+## 📸 Screenshots
+
+| Landing Page | Swap Dashboard | Item Detail |
+|--------------|----------------|-------------|
+| ![Landing Page](path-to-screenshot1.png) | ![Dashboard](path-to-screenshot2.png) | ![Item Detail](path-to-screenshot3.png) |
+
+> 📝 _Replace the above image paths with your actual uploaded screenshot URLs._
+
+---
+
+## 💻 Tech Stack
+
+- **Frontend:** React + Next.js + Tailwind CSS  
+- **Backend:** Node.js + Express + MongoDB  
+- **Auth:** JWT-based authentication  
+- **Notifications:** Real-time notification dropdown  
+- **Architecture:** MVC with full RESTful API structure
+
+---
+
+## 🧠 About Team TechTuskers
+
+**Team TechTuskers** is a passionate trio of engineers — Shivam, Uma, and Rounakk — building smart, impactful solutions at the intersection of sustainability and technology.
+
+🔗 [Visit Our Youtube Video](https://youtu.be/7LtAlogOFiI)
+
+---
+
+## 📂 Repository Structure
+
+```plaintext
+rewear/
+├── frontend/ # React/Next frontend with notification dropdown
+├── backend/ # Express + MongoDB REST API
+├── public/ # Assets and uploads
+├── README.md # You're here!
+```
+
+
+---
+
+## 🙌 Special Thanks
+
+Thanks to Odoo for hosting Hackathon 2025 and giving developers a platform to build real-world solutions for tomorrow’s problems.
+
+---
