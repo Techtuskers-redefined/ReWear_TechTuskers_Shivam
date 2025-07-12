@@ -57,7 +57,7 @@ export default function DashboardPage() {
         <div className="w-64 bg-white min-h-screen border-r border-gray-200">
           <div className="p-6">
             <Link href="/" className="text-xl font-bold text-gray-900">
-              SwapIt
+              ReWear
             </Link>
           </div>
 

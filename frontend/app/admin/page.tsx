@@ -56,7 +56,7 @@ export default function AdminPage() {
             <div className="flex items-center">
               <Link href="/" className="flex items-center space-x-2">
                 <div className="w-6 h-6 bg-black rounded"></div>
-                <span className="text-xl font-bold text-gray-900">SwapIt</span>
+                <span className="text-xl font-bold text-gray-900">ReWear</span>
               </Link>
             </div>
 
