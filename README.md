@@ -1,12 +1,8 @@
 ReWear – Odoo Hackathon 2025 🌱
+
 By: Shivam (Team TechTuskers)
+
 Repository for the Odoo Hackathon 2025 entry “ReWear” by TechTuskers (Shivam, Uma, and Rounakk) – a TypeScript-based solution. 
-hypestat.com
-+8
-github.com
-+8
-github.com
-+8
 
 📌 Project Overview
 ReWear is a sustainable fashion assistant built on Odoo, helping users make smarter swap decisions. It:
