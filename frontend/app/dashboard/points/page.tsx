@@ -68,7 +68,7 @@ export default function PointsWalletPage() {
         <div className="w-64 bg-white min-h-screen border-r border-gray-200 hidden lg:block">
           <div className="p-6">
             <Link href="/" className="text-xl font-bold text-gray-900">
-              ReWear
+              SwapIt
             </Link>
           </div>
 
@@ -92,7 +92,7 @@ export default function PointsWalletPage() {
         <div className="flex-1 p-4 lg:p-8">
           <div className="mb-8">
             <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Points Wallet</h1>
-            <p className="text-gray-600">Manage your ReWear points and redeem rewards</p>
+            <p className="text-gray-600">Manage your SwapIt points and redeem rewards</p>
           </div>
 
           {/* Points Overview */}
@@ -103,10 +103,10 @@ export default function PointsWalletPage() {
                   <div>
                     <p className="text-sm text-gray-600 mb-1">Current Balance</p>
                     <p className="text-3xl font-bold text-blue-600">2,340</p>
-                    <p className="text-sm text-gray-500">ReWear Points</p>
+                    <p className="text-sm text-gray-500">SwapIt Points</p>
                   </div>
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                    <Coins className="h-6 w-6 text-blue-600" />
+                  <div className="w-12 h-12 bg-gradient-to-br from-swapit-blue to-swapit-purple rounded-full flex items-center justify-center">
+                    <Coins className="h-6 w-6 text-white" />
                   </div>
                 </div>
               </CardContent>
@@ -120,8 +120,8 @@ export default function PointsWalletPage() {
                     <p className="text-3xl font-bold text-green-600">3,450</p>
                     <p className="text-sm text-gray-500">All time</p>
                   </div>
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                    <TrendingUp className="h-6 w-6 text-green-600" />
+                  <div className="w-12 h-12 bg-gradient-to-br from-swapit-green to-swapit-teal rounded-full flex items-center justify-center">
+                    <TrendingUp className="h-6 w-6 text-white" />
                   </div>
                 </div>
               </CardContent>
@@ -135,8 +135,8 @@ export default function PointsWalletPage() {
                     <p className="text-3xl font-bold text-purple-600">1,110</p>
                     <p className="text-sm text-gray-500">On rewards</p>
                   </div>
-                  <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                    <Gift className="h-6 w-6 text-purple-600" />
+                  <div className="w-12 h-12 bg-gradient-to-br from-swapit-purple to-swapit-pink rounded-full flex items-center justify-center">
+                    <Gift className="h-6 w-6 text-white" />
                   </div>
                 </div>
               </CardContent>

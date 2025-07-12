@@ -169,8 +169,11 @@ export default function BrowsePage() {
           {/* Main Content */}
           <div className="flex-1">
             <div className="flex items-center justify-between mb-8">
-              <h1 className="text-3xl font-bold text-gray-900">Browse Items</h1>
-              <Button variant="outline" className="flex items-center gap-2 bg-transparent">
+              <h1 className="text-3xl font-bold gradient-text">Browse Items</h1>
+              <Button
+                variant="outline"
+                className="flex items-center gap-2 border-swapit-blue text-swapit-blue hover:bg-swapit-blue hover:text-white bg-transparent"
+              >
                 Sort
                 <ChevronDown className="h-4 w-4" />
               </Button>

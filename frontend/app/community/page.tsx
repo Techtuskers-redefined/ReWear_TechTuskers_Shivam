@@ -14,7 +14,7 @@ const communityPosts = [
     avatar: "/placeholder.svg?height=40&width=40",
     time: "2 hours ago",
     content:
-      "Just completed my 10th swap! This vintage leather jacket is absolutely perfect. The ReWear community never disappoints! 💚",
+      "Just completed my 10th swap! This vintage leather jacket is absolutely perfect. The SwapIt community never disappoints! 💚",
     image: "/placeholder.svg?height=300&width=400",
     likes: 24,
     comments: 8,
@@ -36,7 +36,7 @@ const communityPosts = [
     user: "Sofia Rodriguez",
     avatar: "/placeholder.svg?height=40&width=40",
     time: "6 hours ago",
-    content: "Before and after of my closet transformation using ReWear! From fast fashion to sustainable style ✨",
+    content: "Before and after of my closet transformation using SwapIt! From fast fashion to sustainable style ✨",
     image: "/placeholder.svg?height=300&width=400",
     likes: 45,
     comments: 15,
@@ -83,7 +83,7 @@ export default function CommunityPage() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Community</h1>
+          <h1 className="text-3xl font-bold gradient-text mb-2">Community</h1>
           <p className="text-gray-600">Connect with fellow swappers and share your sustainable fashion journey</p>
         </div>
 
@@ -183,7 +183,7 @@ export default function CommunityPage() {
                         <div className="text-sm text-gray-600">
                           Reward: <span className="font-medium text-gray-900">{challenge.reward}</span>
                         </div>
-                        <Button size="sm" className="bg-blue-500 hover:bg-blue-600">
+                        <Button size="sm" className="btn-primary">
                           Join Challenge
                         </Button>
                       </div>
@@ -196,7 +196,7 @@ export default function CommunityPage() {
                 <Card>
                   <CardContent className="p-8 text-center">
                     <div className="text-gray-500 mb-4">No upcoming events</div>
-                    <Button className="bg-blue-500 hover:bg-blue-600">Create Event</Button>
+                    <Button className="btn-secondary">Create Event</Button>
                   </CardContent>
                 </Card>
               </TabsContent>

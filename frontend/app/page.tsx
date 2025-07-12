@@ -66,7 +66,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl">
           <div className="relative rounded-2xl overflow-hidden bg-gray-300 h-96">
             <Image
-              src="https://images.pexels.com/photos/30922973/pexels-photo-30922973.jpeg"
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-07-12%20at%2010.48.04-Sehe5HGJQNqXqEbVaxLc8ECw9L7lTd.png"
               alt="Hero background"
               fill
               className="object-cover"
@@ -80,12 +80,12 @@ export default function HomePage() {
               </p>
               <div className="flex gap-4">
                 <Link href="/browse">
-                  <Button size="lg" className="bg-blue-500 hover:bg-blue-600 text-white px-8">
+                  <Button size="lg" className="btn-primary px-8">
                     Start Swapping
                   </Button>
                 </Link>
                 <Link href="/browse">
-                  <Button size="lg" variant="secondary" className="bg-white text-gray-900 px-8">
+                  <Button size="lg" className="btn-secondary px-8">
                     Browse Items
                   </Button>
                 </Link>
@@ -130,8 +130,8 @@ export default function HomePage() {
 
           <div className="grid gap-8 md:grid-cols-3">
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 bg-gradient-to-br from-swapit-blue to-swapit-purple rounded-lg flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -148,8 +148,8 @@ export default function HomePage() {
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 bg-gradient-to-br from-swapit-green to-swapit-teal rounded-lg flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -165,8 +165,8 @@ export default function HomePage() {
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 bg-gradient-to-br from-swapit-orange to-swapit-pink rounded-lg flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -213,6 +213,21 @@ export default function HomePage() {
               </Card>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="px-4 py-16 sm:px-6 lg:px-8 gradient-bg">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">Ready to Join the Movement?</h2>
+          <p className="text-xl text-blue-100 mb-8">
+            Start your sustainable fashion journey today and become part of our growing community.
+          </p>
+          <Link href="/upload">
+            <Button size="lg" className="bg-white text-swapit-blue hover:bg-gray-100">
+              Get Started
+            </Button>
+          </Link>
         </div>
       </section>
 
