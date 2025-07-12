@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Search, Bell } from "lucide-react"
+import { Search } from "lucide-react"
 import Link from "next/link"
+import { NotificationDropdown } from "@/components/notification-dropdown"
 
 export function Navbar() {
   return (
@@ -12,7 +12,7 @@ export function Navbar() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
               <div className="w-6 h-6 bg-black rounded"></div>
-              <span className="text-xl font-bold text-gray-900">SwapIt</span>
+              <span className="text-xl font-bold text-gray-900">ReWear</span>
             </Link>
           </div>
 
@@ -38,9 +38,7 @@ export function Navbar() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input placeholder="Search" className="pl-10 w-64 bg-gray-100 border-0" />
             </div>
-            <Button variant="ghost" size="icon">
-              <Bell className="h-5 w-5" />
-            </Button>
+            <NotificationDropdown />
             <Link href="/dashboard">
               <Avatar className="h-8 w-8 cursor-pointer">
                 <AvatarImage src="/placeholder.svg?height=32&width=32" />
