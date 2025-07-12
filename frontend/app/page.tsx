@@ -66,7 +66,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl">
           <div className="relative rounded-2xl overflow-hidden bg-gray-300 h-96">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-07-12%20at%2010.48.04-Sehe5HGJQNqXqEbVaxLc8ECw9L7lTd.png"
+              src="https://images.pexels.com/photos/30922973/pexels-photo-30922973.jpeg"
               alt="Hero background"
               fill
               className="object-cover"
